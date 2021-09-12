@@ -209,8 +209,22 @@ scatter_plot_interactive_menu <- scatter_plot_interactive %>% layout(
   annotations=list(text="<b> Choose State: </b>", x=1.4, y=0.55, xref='paper', yref='paper', showarrow=FALSE)
 )
 
+# Ensure the scatterplot is the correct dimensions to render nicely
+scatter_plot_interactive_menu$width = 870
+scatter_plot_interactive_menu$height = 545
+
 # Print the output to the plotting window
 print(scatter_plot_interactive_menu)
 
-# Output a HTML file in the working directory
+# Output a HTML file in the working directory (see plot.html in main directory of repo to see the output)
 with_dir(getwd(), saveWidget(scatter_plot_interactive_menu, "plot.html"))
+
+# --- Optional: Upload the output to plotly chart studio for HTML embedding ---
+# Note: you must set up your API key for this to work
+plotly_POST(
+  x = last_plot(),
+  file = "COVID Positive Test Rate Plot",
+  fileopt = "overwrite",
+  sharing = c("public"),
+  world_readable=TRUE
+)
